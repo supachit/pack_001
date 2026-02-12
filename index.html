@@ -96,9 +96,9 @@
 <body>
 
   <!-- 🎵 เพลงรัก -->
-  <audio autoplay loop>
-    <source src="music.mp3" type="audio/mpeg">
-  </audio>
+  <audio id="bgm" loop>
+  <source src="music.MP3" type="audio/mpeg">
+</audio>
 
   <!-- ❤️ หน้าแรก -->
   <div class="container" id="mainPage">
@@ -129,6 +129,11 @@
 มันมีความหมายมากจริงๆ
 รักเธอที่สุดนะ ❤️`;
 
+  function playMusic() {
+  const music = document.getElementById("bgm");
+  music.play();
+}
+    
     let i = 0;
     const typingDiv = document.getElementById("typing");
 
@@ -144,6 +149,7 @@
 
     // 🔁 เปลี่ยนหน้า
     function goToQuestion() {
+      document.getElementById("bgm").play();
       document.getElementById("mainPage").style.display = "none";
       document.getElementById("questionPage").style.display = "block";
     }
@@ -178,4 +184,5 @@
 
 </body>
 </html>
+
 
