@@ -84,7 +84,7 @@ img {
   font-size:18px;
   color:#ff4d6d;
   min-height:60px;
-  animation: fadeInOut 1.5s ease-in-out;
+  animation: fadeInOut 2.8s ease-in-out;
 }
 </style>
 </head>
@@ -106,11 +106,11 @@ img {
 <div class="page" id="q1">
   <h2>คุณอยากเป็นแฟนกันต่อไหม 🥺</h2>
   <button class="yes1" onclick="go('q2')">เป็นนน ❤️</button>
-  <button class="yes2" onclick="go('q2')">เป็นเหมือนกัน 💕</button>
+  <button class="yes2" onclick="go('q2')">เป็นเหมือนกัน แค่คนละสี💕</button>
 </div>
 
 <div class="page" id="q2">
-  <h2>คิดดีแล้วใช่มั้ย 😏</h2>
+  <h2>จริงหรออ ให้ตอบอีกรอบนึง 😏</h2>
   <button class="yes1" onclick="go('quiz')">จริง ❤️</button>
   <button class="yes2" onclick="go('quiz')">จริงสุด 💕</button>
 </div>
@@ -207,33 +207,42 @@ const endMessages = [
   "เค้ารักคุณนะ ❤️"
 ];
 
-let endIndex = 0;
-let interval;
+let imgIndex = 0;
+let textIndex = 0;
+let imgInterval, textInterval;
 
 function startEnding(){
   const img = document.getElementById("endSlide");
   const text = document.getElementById("endText");
 
-  clearInterval(interval);
-  endIndex = 0;
+  clearInterval(imgInterval);
+  clearInterval(textInterval);
 
-  function update(){
+  // --- เปลี่ยนรูปเร็ว ---
+  function changeImage(){
     img.style.animation = "none";
-    text.style.animation = "none";
     void img.offsetWidth;
-    void text.offsetWidth;
-
     img.style.animation = "fadeInOut 1.5s ease-in-out";
-    text.style.animation = "fadeInOut 1.5s ease-in-out";
 
-    img.src = endImages[endIndex % endImages.length];
-    text.innerText = endMessages[endIndex % endMessages.length];
-
-    endIndex++;
+    img.src = endImages[imgIndex % endImages.length];
+    imgIndex++;
   }
 
-  update();
-  interval = setInterval(update, 1500);
+  // --- เปลี่ยนข้อความช้า ---
+  function changeText(){
+    text.style.animation = "none";
+    void text.offsetWidth;
+    text.style.animation = "fadeInOut 2.8s ease-in-out";
+
+    text.innerText = endMessages[textIndex % endMessages.length];
+    textIndex++;
+  }
+
+  changeImage();
+  changeText();
+
+  imgInterval = setInterval(changeImage, 1200);   // รูป: เร็ว
+  textInterval = setInterval(changeText, 3000);  // ข้อความ: ช้า
 }
 </script>
 
