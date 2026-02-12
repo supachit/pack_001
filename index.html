@@ -39,6 +39,9 @@ button {
   margin:8px;
 }
 
+.yes1 { background:#ff4d6d; }
+.yes2 { background:#f48fb1; }
+
 input {
   width:100%;
   padding:12px;
@@ -52,6 +55,10 @@ img {
   border-radius:15px;
 }
 
+.cover {
+  margin: 15px 0;
+}
+
 .grid {
   display:grid;
   grid-template-columns: repeat(3,1fr);
@@ -59,17 +66,24 @@ img {
 }
 
 .grid img {
-  width:100%;
   height:100px;
   object-fit:cover;
-  border-radius:10px;
 }
 
-.cover {
-  width: 100%;
-  border-radius: 18px;
-  margin: 15px 0;
-  object-fit: cover;
+#ending img {
+  animation: fade 2s ease;
+}
+
+#endText {
+  font-size:18px;
+  color:#ff4d6d;
+  min-height:60px;
+  animation: fade 2s ease;
+}
+
+@keyframes fade {
+  from { opacity:0; }
+  to { opacity:1; }
 }
 </style>
 </head>
@@ -77,40 +91,37 @@ img {
 <body>
 
 <audio id="bgm" loop>
-  <source src="music.MP3" type="audio/mpeg">
+  <source src="music.mp3" type="audio/mpeg">
 </audio>
 
-<!-- หน้า 1 -->
+<!-- หน้าแรก -->
 <div class="page active" id="page1">
   <h2>สุขสันต์วันวาเลนไทน์นะ MINEGIFFY 💕</h2>
-
-  <img src="cover.JPG" class="cover">
-
-  <p>เค้ามีอะไยจะถามหน่อยนะ…</p>
-
-  <button onclick="go('q1')">เริ่มเลยมั้ย หุหุ ❤️</button>
+  <img src="cover.jpg" class="cover">
+  <p>เค้ามีอะใยจะถามหน่อยนะ… หุหุ</p>
+  <button onclick="go('q1')">เริ่มเลย ❤️</button>
 </div>
 
 <!-- ถามรอบแรก -->
 <div class="page" id="q1">
   <h2>คุณอยากเป็นแฟนกันต่อไหม 🥺</h2>
-  <button style="background:#ff4d6d" onclick="go('q2')">เป็นน ❤️</button>
-  <button style="background:#ff9a9e" onclick="go('q2')">เป็นเหมือนกันแค่คนละสี 💕</button>
+  <button class="yes1" onclick="go('q2')">เป็นนน ❤️</button>
+  <button class="yes2" onclick="go('q2')">เป็นเหมือนกัน แค่คนละสี 💕</button>
 </div>
 
 <!-- ถามกวน -->
 <div class="page" id="q2">
-  <h2>จริงนะ…<br>ให้ลองคิดใหม่อีกรอบนึง555 😏</h2>
-  <button onclick="go('quiz')">จริงงง ❤️</button>
-  <button onclick="go('quiz')">จริงก็ด่ะะ 💕</button>
+  <h2>จริงนะ…<br>เเค้าคิดใหม่อีกรอบนึง หุหุ 😏</h2>
+  <button class="yes1" onclick="go('quiz')">จริงงง ❤️</button>
+  <button class="yes2" onclick="go('quiz')">จริงก็ด่ะะะ 💕</button>
 </div>
 
 <!-- คำถาม -->
 <div class="page" id="quiz">
-  <h2>เจ๋งงง ตอบคำถามหน่อย 🧠</h2>
+  <h2>เจ๋งง ตอบคำถามหน่อยนะะ 🧠</h2>
   <input placeholder="เราคบกันมากี่ปีแล้ว">
   <input placeholder="เราเจอกันครั้งแรกที่ไหน">
-  <input placeholder="คุณชอบเค้าที่ตรงไหน">
+  <input placeholder="เธอชอบฉันที่ตรงไหน">
   <button onclick="go('result')">ส่งคำตอบ 💌</button>
 </div>
 
@@ -118,7 +129,7 @@ img {
 <div class="page" id="result">
   <h2>เย้! 💖</h2>
   <p>
-    เค้าย้ากกกคุณนะ<br>
+    เค้าย้ากกกคุนน<br>
     เย็นนี้เค้าพาไปหาของอร่อยๆ กิน 🥰
   </p>
   <button onclick="startCamera()">ถ่ายรูปกัน 📸</button>
@@ -131,27 +142,39 @@ img {
   <button onclick="takePhoto()">ถ่าย 📸</button>
 </div>
 
-<!-- แสดงรูป -->
+<!-- รูปที่ถ่าย -->
 <div class="page" id="photoPage">
   <h3>รูปของเรา 💕</h3>
   <img id="photo">
   <br><br>
-  <button onclick="go('gallery')">ดูรูปของเรา ❤️</button>
+  <button onclick="go('gallery')">ดูความทรงจำ ❤️</button>
 </div>
 
-<!-- gallery -->
+<!-- Gallery -->
 <div class="page" id="gallery">
   <h3>ความทรงจำของเรา 💖</h3>
   <div class="grid" id="grid"></div>
+  <br>
+  <button onclick="go('ending')">ไปต่อ 💕</button>
+</div>
+
+<!-- ฉากจบ -->
+<div class="page" id="ending">
+  <img id="endSlide">
+  <p id="endText"></p>
 </div>
 
 <canvas id="canvas" style="display:none;"></canvas>
 
 <script>
 function go(id){
+  const bgm = document.getElementById("bgm");
+  if(bgm && bgm.paused) bgm.play();
+
   document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
   document.getElementById(id).classList.add('active');
-  document.getElementById("bgm").play();
+
+  if(id === "ending") startEnding();
 }
 
 // กล้อง
@@ -171,20 +194,39 @@ function takePhoto(){
   go('photoPage');
 }
 
-// gallery
+// gallery รูปเล็ก
 const grid = document.getElementById('grid');
 for(let i=1;i<=33;i++){
   const img = document.createElement('img');
   img.src = `pic${i}.jpg`;
+  img.onerror = () => img.remove();
   grid.appendChild(img);
+}
+
+// ฉากจบ
+const endImages = ["pic1.jpg","pic2.jpg","pic3.jpg","pic4.jpg","pic5.jpg"];
+const endMessages = [
+  "ขอบคุณนะ สำหรับเรื่องราวดีๆ ที่เกิดขึ้น 💕",
+  "ทุกช่วงเวลาที่มีคุณ มันมีความหมาย",
+  "ไม่ว่าจะเจออะไร เค้าดีใจที่มีคุณ",
+  "เค้ารักคุณนะ จุ๊บจุ๊บ..❤️"
+];
+
+let endIndex = 0;
+function startEnding(){
+  const img = document.getElementById("endSlide");
+  const text = document.getElementById("endText");
+  endIndex = 0;
+  img.src = endImages[0];
+  text.innerText = endMessages[0];
+
+  setInterval(()=>{
+    endIndex++;
+    if(endIndex < endImages.length) img.src = endImages[endIndex];
+    if(endIndex < endMessages.length) text.innerText = endMessages[endIndex];
+  },3500);
 }
 </script>
 
 </body>
 </html>
-
-
-
-
-
-
