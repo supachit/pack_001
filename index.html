@@ -64,6 +64,13 @@ img {
   object-fit:cover;
   border-radius:10px;
 }
+
+.cover {
+  width: 100%;
+  border-radius: 18px;
+  margin: 15px 0;
+  object-fit: cover;
+}
 </style>
 </head>
 
@@ -76,7 +83,11 @@ img {
 <!-- หน้า 1 -->
 <div class="page active" id="page1">
   <h2>สุขสันต์วันวาเลนไทน์ 💕</h2>
+
+  <img src="cover.jpg" class="cover">
+
   <p>มีอะไรจะถามหน่อยนะ…</p>
+
   <button onclick="go('q1')">เริ่มเลย ❤️</button>
 </div>
 
@@ -171,4 +182,5 @@ for(let i=1;i<=20;i++){
 
 </body>
 </html>
+
 
